@@ -1,3 +1,4 @@
+import { Header } from '@/components/layouts/header/Header';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -10,6 +11,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <Head>
         <title>ポケモン図鑑</title>
       </Head>
+      <Header />
       <Component {...pageProps} />
     </RecoilRoot>
   );
