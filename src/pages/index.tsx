@@ -1,7 +1,11 @@
 import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
-  return <div className='flex justify-center text-blue-500'>Hello Next App!!</div>;
+  return (
+    <>
+      <div className='text-center'>dictionary部分</div>
+    </>
+  );
 };
 
 export default Home;
