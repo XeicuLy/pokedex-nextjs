@@ -2,7 +2,6 @@ import { getAllPokemons } from '@/libs/pokemon';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
 
 export const getStaticProps = async () => {
   const pokemons = await getAllPokemons();
@@ -14,14 +13,6 @@ export const getStaticProps = async () => {
 };
 
 const Home = props => {
-  // const didLogRef = useRef(false);
-  // useEffect(() => {
-  //   if (didLogRef.current === false) {
-  //     didLogRef.current = true;
-  //     getAllPokemons();
-  //   }
-  // }, []);
-  console.log(props);
   return (
     <>
       <Head>

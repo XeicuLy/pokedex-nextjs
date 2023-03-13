@@ -2,7 +2,7 @@ import axios from 'axios';
 import { BASE_URL } from '@/const/const';
 
 export const getAllPokemons = async () => {
-  // ポケモンの全データ取得
+  // 全ポケモンのデータ取得
   const res = await axios.get(BASE_URL).catch(() => {
     return <h1>エラーが発生しました。</h1>;
   });
@@ -11,13 +11,16 @@ export const getAllPokemons = async () => {
   return await Promise.all(dataPromise);
 };
 
-export const getPokemon = async id => {
+export const getPokemon = async nameId => {
   // ポケモンの基本データ取得
-  const basicData = await axios.get(BASE_URL + id);
+  const basicData = await axios.get(BASE_URL + nameId).catch(() => {
+    return <h1>エラーが発生しました。</h1>;
+  });
   // ポケモンの詳細データ取得
-  const detailData = await axios.get(basicData.data.species.url);
+  const detailData = await axios.get(basicData.data.species.url).catch(() => {
+    return <h1>エラーが発生しました。</h1>;
+  });
 
-  const nameId = basicData.data.name;
   const image = basicData.data.sprites.other['official-artwork']['front_default'];
   const types = basicData.data.types;
   const height = basicData.data.height;
@@ -25,7 +28,6 @@ export const getPokemon = async id => {
   const index = detailData.data.pokedex_numbers[0]['entry_number'];
   const name = detailData.data.names[0].name;
   const genus = detailData.data.genera[0].genus;
-  // 今後はrecoil使っていい感じにしたい
   return {
     id: nameId,
     image: image,
