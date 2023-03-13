@@ -8,9 +8,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   // 各ページの共通レイアウト
   return (
     <RecoilRoot>
-      <Head>
-        <title>ポケモン図鑑</title>
-      </Head>
       <Header />
       <Component {...pageProps} />
     </RecoilRoot>
