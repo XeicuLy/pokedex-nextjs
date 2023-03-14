@@ -21,6 +21,8 @@ export const getPokemon = async nameId => {
     return <h1>エラーが発生しました。</h1>;
   });
 
+  // タイプの日本語版がほしい
+
   const image = basicData.data.sprites.other['official-artwork']['front_default'];
   const types = basicData.data.types;
   const height = basicData.data.height;
