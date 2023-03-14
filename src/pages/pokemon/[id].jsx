@@ -1,3 +1,4 @@
+import { Button } from '@/components/elements/Button';
 import { getAllPokemons, getPokemon } from '@/libs/pokemon';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -30,7 +31,11 @@ const Pokemon = props => {
       </Head>
       <main>
         <article>
-          <div>
+          <div className='text-center text-xl'>{`No. ${`${props.pokemon.index}`.padStart(
+            4,
+            '0',
+          )}`}</div>
+          <div className='flex content-center justify-center'>
             <Image
               src={props.pokemon.image}
               alt={props.pokemon.name}
@@ -39,15 +44,17 @@ const Pokemon = props => {
               priority={true}
             />
           </div>
-          <div>
-            <div>{`No. ${`${props.pokemon.index}`.padStart(4, '0')}`}</div>
-            <h2>{props.pokemon.name}</h2>
-            <ul>
-              <li>分類: {props.pokemon.genus}</li>
-              <li>高さ: {`${props.pokemon.height / 10}m`}</li>
-              <li>重さ: {`${props.pokemon.weight / 10}kg`}</li>
-              <li>{props.pokemon.description}</li>
-            </ul>
+          <div className='flex flex-col content-center justify-center text-center'>
+            <h2 className='text-3xl'>{props.pokemon.name}</h2>
+            <div className='mt-2.5 flex justify-center'>
+              <ul className='w-5/12 rounded-md border-2 border-gray-800 p-4'>
+                <li className='text-lg'>分類: {props.pokemon.genus}</li>
+                <li className='mt-1.5 text-lg'>高さ: {`${props.pokemon.height / 10}m`}</li>
+                <li className='mt-1.5 text-lg'>重さ: {`${props.pokemon.weight / 10}kg`}</li>
+                <li className='mt-2 text-xl'>{props.pokemon.description}</li>
+              </ul>
+            </div>
+            <Button />
           </div>
         </article>
       </main>

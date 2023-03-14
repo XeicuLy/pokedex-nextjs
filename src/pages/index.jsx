@@ -18,8 +18,8 @@ const Home = props => {
       <Head>
         <title>ポケモン図鑑</title>
       </Head>
-      <main>
-        <ul>
+      <main className='flex content-center justify-center'>
+        <ul className='grid grid-cols-4 grid-rows-5 gap-8 py-5'>
           {props.pokemons.map(pokemon => (
             <li key={pokemon.name}>
               <Link href={`/pokemon/${encodeURIComponent(pokemon.id)}`}>
@@ -30,7 +30,7 @@ const Home = props => {
                   width={200}
                   height={200}
                 />
-                <div>{pokemon.name}</div>
+                <div className='text-center text-lg'>{pokemon.name}</div>
               </Link>
             </li>
           ))}
