@@ -29,7 +29,7 @@ const Pokemon = props => {
         <title>{`ポケモン図鑑 - ${props.pokemon.name}`}</title>
       </Head>
       <main>
-        <div>
+        <article>
           <div>
             <Image src={props.pokemon.image} alt={props.pokemon.name} width={200} height={200} />
           </div>
@@ -43,7 +43,7 @@ const Pokemon = props => {
               <li>重さ: {`${props.pokemon.weight / 10}kg`}</li>
             </ul>
           </div>
-        </div>
+        </article>
       </main>
     </>
   );
