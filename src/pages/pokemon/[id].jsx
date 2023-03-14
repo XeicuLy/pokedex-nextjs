@@ -31,16 +31,22 @@ const Pokemon = props => {
       <main>
         <article>
           <div>
-            <Image src={props.pokemon.image} alt={props.pokemon.name} width={200} height={200} />
+            <Image
+              src={props.pokemon.image}
+              alt={props.pokemon.name}
+              width={200}
+              height={200}
+              priority={true}
+            />
           </div>
           <div>
             <div>{`No. ${`${props.pokemon.index}`.padStart(4, '0')}`}</div>
             <h2>{props.pokemon.name}</h2>
             <ul>
               <li>分類: {props.pokemon.genus}</li>
-              <li>タイプ: {props.pokemon.types.map(type => type.type.name).join(', ')}</li>
               <li>高さ: {`${props.pokemon.height / 10}m`}</li>
               <li>重さ: {`${props.pokemon.weight / 10}kg`}</li>
+              <li>{props.pokemon.description}</li>
             </ul>
           </div>
         </article>
