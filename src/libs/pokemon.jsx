@@ -3,9 +3,7 @@ import { BASE_URL } from '@/const/const';
 
 export const getAllPokemons = async () => {
   // 全ポケモンのデータ取得
-  const res = await axios.get(BASE_URL).catch(() => {
-    return <h1>予期せぬエラーが発生しました。</h1>;
-  });
+  const res = await axios.get(BASE_URL);
   const results = res.data.results;
   const dataPromise = results.map(data => getPokemon(data.name));
   return await Promise.all(dataPromise);
@@ -13,14 +11,9 @@ export const getAllPokemons = async () => {
 
 export const getPokemon = async nameId => {
   // ポケモンの基本データ取得
-  const basicData = await axios.get(BASE_URL + nameId).catch(() => {
-    return <h1>予期せぬエラーが発生しました。</h1>;
-  });
+  const basicData = await axios.get(BASE_URL + nameId);
   // ポケモンの詳細データ取得
-  const detailData = await axios.get(basicData.data.species.url).catch(() => {
-    return <h1>予期せぬエラーが発生しました。</h1>;
-  });
-
+  const detailData = await axios.get(basicData.data.species.url);
   const image = basicData.data.sprites.other['official-artwork']['front_default'];
   const height = basicData.data.height;
   const weight = basicData.data.weight;
