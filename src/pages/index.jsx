@@ -1,41 +1,82 @@
-import { getAllPokemons } from '@/libs/pokemon';
+import { Card } from '@/components/elements/Card';
+import { BASE_URL } from '@/const/const';
+import { getAllPokemon, getPokemon } from '@/libs/pokemon';
 import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-export const getStaticProps = async () => {
-  const pokemons = await getAllPokemons();
-  return {
-    props: {
-      pokemons,
-    },
+const Home = () => {
+  const [loading, setLoading] = useState(true);
+  const [pokemonData, setPokemonData] = useState([]);
+  const [nextURL, setNextURL] = useState('');
+  const [prevURL, setPrevURL] = useState('');
+
+  useEffect(() => {
+    const fetchPokemonData = async () => {
+      // 全てのポケモンデータを取得
+      const res = await getAllPokemon(BASE_URL);
+      console.log(res);
+      // 各ポケモンの詳細データを取得
+      loadPokemon(res.results);
+      setNextURL(res.next);
+      setPrevURL(res.previous);
+      setLoading(false);
+    };
+    fetchPokemonData();
+  }, []);
+
+  const loadPokemon = async data => {
+    const _pokemonData = await Promise.all(
+      data.map(pokemon => {
+        const pokemonRecord = getPokemon(pokemon.url);
+        return pokemonRecord;
+      }),
+    );
+    setPokemonData(_pokemonData);
   };
-};
+  console.log(pokemonData);
 
-const Home = props => {
+  const handlePrevPage = async () => {
+    if (!prevURL) return;
+    setLoading(true);
+    const data = await getAllPokemon(prevURL);
+    await loadPokemon(data.results);
+    setNextURL(data.next);
+    setPrevURL(data.previous);
+    setLoading(false);
+  };
+
+  const handleNextPage = async () => {
+    setLoading(true);
+    const data = await getAllPokemon(nextURL);
+    // console.log(data);
+    await loadPokemon(data.results);
+    setNextURL(data.next);
+    setPrevURL(data.previous);
+    setLoading(false);
+  };
+
   return (
     <>
       <Head>
         <title>ポケモン図鑑</title>
       </Head>
-      <main className='flex content-center justify-center'>
-        <ul className='grid grid-cols-4 grid-rows-5 gap-8 py-5'>
-          {props.pokemons.map(pokemon => (
-            <li key={pokemon.name}>
-              <Link href={`/pokemon/${encodeURIComponent(pokemon.id)}`}>
-                <Image
-                  src={pokemon.image}
-                  alt={pokemon.name}
-                  priority={true}
-                  width={200}
-                  height={200}
-                />
-                <div className='text-center text-lg'>{pokemon.name}</div>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </main>
+      <div className='text-center'>
+        {loading ? (
+          <h1>ロード中...</h1>
+        ) : (
+          <>
+            <div>
+              {pokemonData.map((pokemon, i) => {
+                return <Card key={i} pokemon={pokemon} />;
+              })}
+            </div>
+            <div>
+              <button onClick={handlePrevPage}>Prev</button>
+              <button onClick={handleNextPage}>Next</button>
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 };
