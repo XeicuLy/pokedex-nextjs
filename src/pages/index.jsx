@@ -1,14 +1,20 @@
 import { Card } from '@/components/elements/Card';
 import { BASE_URL } from '@/const/const';
 import { getAllPokemon, getPokemon } from '@/libs/pokemon';
+import { loadingState, nextURLState, pokemonDataState, prevURLState } from '@/stores/Atom';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 
 const Home = () => {
-  const [loading, setLoading] = useState(true);
-  const [pokemonData, setPokemonData] = useState([]);
-  const [nextURL, setNextURL] = useState('');
-  const [prevURL, setPrevURL] = useState('');
+  // const [loading, setLoading] = useState(true);
+  // const [nextURL, setNextURL] = useState('');
+  // const [prevURL, setPrevURL] = useState('');
+  // const [pokemonData, setPokemonData] = useState([]);
+  const [loading, setLoading] = useRecoilState(loadingState);
+  const [nextURL, setNextURL] = useRecoilState(nextURLState);
+  const [prevURL, setPrevURL] = useRecoilState(prevURLState);
+  const [pokemonData, setPokemonData] = useRecoilState(pokemonDataState);
 
   useEffect(() => {
     const fetchPokemonData = async () => {
