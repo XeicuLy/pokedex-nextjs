@@ -1,19 +1,17 @@
 import axios from 'axios';
-import { BASE_URL } from '@/const/const';
 
-export const getAllPokemons = async () => {
-  // 全ポケモンのデータ取得
-  const res = await axios.get(BASE_URL);
-  const results = res.data.results;
-  const dataPromise = results.map(data => getPokemon(data.name));
-  return await Promise.all(dataPromise);
+export const getAllPokemon = async url => {
+  const res = await axios.get(url);
+  return res.data;
 };
 
-export const getPokemon = async nameId => {
-  // ポケモンの基本データ取得
-  const basicData = await axios.get(BASE_URL + nameId);
+export const getPokemon = async url => {
+  // 基本データ
+  const basicData = await axios.get(url);
   // ポケモンの詳細データ取得
   const detailData = await axios.get(basicData.data.species.url);
+
+  const nameId = basicData.data.name;
   const image = basicData.data.sprites.other['official-artwork']['front_default'];
   const height = basicData.data.height;
   const weight = basicData.data.weight;
