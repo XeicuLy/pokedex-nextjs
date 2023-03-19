@@ -1,24 +1,29 @@
 import { Button } from '@/components/elements/Button';
 import { BASE_URL } from '@/const/const';
-import { getPokemon } from '@/libs/pokemon';
-import { pokemonDetailDataState } from '@/stores/Atom';
+import { getPokemon } from '@/libs/pokemon';;
+import { PokemonDetailData } from '@/types/type';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
 
 const Pokemon = () => {
-  const [pokemonDetailData, setPokemonDetailData] = useRecoilState(pokemonDetailDataState);
+  const [pokemonDetailData, setPokemonDetailData] = useState<PokemonDetailData>();
   const router = useRouter();
   useEffect(() => {
     const fetchPokemonData = async () => {
       const id = router.query.id;
-      const res = await getPokemon(BASE_URL + id);
+      const res: PokemonDetailData = await getPokemon(BASE_URL + id);
       setPokemonDetailData(res);
     };
-    fetchPokemonData();
-  }, []);
+    if (router.query.id) {
+      fetchPokemonData();
+    }
+  }, [router.query.id]);
+
+  if (!pokemonDetailData) {
+    return;
+  }
 
   return (
     <>

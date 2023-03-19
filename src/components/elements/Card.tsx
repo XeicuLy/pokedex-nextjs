@@ -1,7 +1,8 @@
+import { pokemonData } from '@/types/type';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export const Card = ({ pokemon }) => {
+export const Card: React.FC<{ key: number; pokemon: pokemonData }> = ({ pokemon }) => {
   return (
     <>
       <li className='overflow-hidden rounded-lg bg-white shadow-md transition duration-300 ease-in-out hover:shadow-lg'>

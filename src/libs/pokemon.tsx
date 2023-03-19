@@ -1,11 +1,12 @@
+import { DetailPokemonData } from '@/types/type';
 import axios from 'axios';
 
-export const getAllPokemon = async url => {
+export const getAllPokemon = async (url: string) => {
   const res = await axios.get(url);
   return res.data;
 };
 
-export const getPokemon = async url => {
+export const getPokemon = async (url: string) => {
   // 基本データ
   const basicData = await axios.get(url);
   // ポケモンの詳細データ取得
@@ -16,11 +17,17 @@ export const getPokemon = async url => {
   const height = basicData.data.height;
   const weight = basicData.data.weight;
   const index = detailData.data.pokedex_numbers[0]['entry_number'];
-  const names = detailData.data.names.filter(e => e.language.name === 'ja');
+  const names = detailData.data.names.filter(
+    (e: DetailPokemonData['names'][number]) => e.language.name === 'ja',
+  );
   const name = names[0].name;
-  const genuses = detailData.data.genera.filter(e => e.language.name === 'ja');
+  const genuses = detailData.data.genera.filter(
+    (e: DetailPokemonData['genera'][number]) => e.language.name === 'ja',
+  );
   const genus = genuses[0].genus;
-  const descriptions = detailData.data.flavor_text_entries.filter(e => e.language.name === 'ja');
+  const descriptions = detailData.data.flavor_text_entries.filter(
+    (e: DetailPokemonData['flavor_text_entries'][number]) => e.language.name === 'ja',
+  );
   const description = descriptions[0].flavor_text;
   return {
     id: nameId,
