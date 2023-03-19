@@ -1,16 +1,17 @@
 import { Card } from '@/components/elements/Card';
 import { BASE_URL } from '@/const/const';
 import { getAllPokemon, getPokemon } from '@/libs/pokemon';
-import { loadingState, nextURLState, pokemonDataState, prevURLState } from '@/stores/Atom';
+import { loadingState, nextURLState, prevURLState } from '@/stores/Atom';
+import { pokemon, pokemonData } from '@/types/type';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 const Home = () => {
   const [loading, setLoading] = useRecoilState(loadingState);
   const [nextURL, setNextURL] = useRecoilState(nextURLState);
   const [prevURL, setPrevURL] = useRecoilState(prevURLState);
-  const [pokemonData, setPokemonData] = useRecoilState(pokemonDataState);
+  const [pokemonData, setPokemonData] = useState<pokemonData[]>([]);
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -22,14 +23,15 @@ const Home = () => {
       setNextURL(res.next);
       // 前のページのURLをセット
       setPrevURL(res.previous);
+      // ローディング終了
       setLoading(false);
     };
     fetchPokemonData();
   }, []);
 
-  const loadPokemon = async data => {
-    const _pokemonData = await Promise.all(
-      data.map(pokemon => {
+  const loadPokemon = async (data: []) => {
+    const _pokemonData: pokemonData[] = await Promise.all(
+      data.map((pokemon: pokemon) => {
         const pokemonRecord = getPokemon(pokemon.url);
         return pokemonRecord;
       }),
@@ -51,7 +53,6 @@ const Home = () => {
     if (!nextURL) return;
     setLoading(true);
     const data = await getAllPokemon(nextURL);
-    // console.log(data);
     await loadPokemon(data.results);
     setNextURL(data.next);
     setPrevURL(data.previous);
@@ -69,7 +70,7 @@ const Home = () => {
         ) : (
           <>
             <ul className='grid grid-cols-4 grid-rows-5 gap-8 '>
-              {pokemonData.map((pokemon, i) => {
+              {pokemonData.map((pokemon: pokemonData, i: number) => {
                 return <Card key={i} pokemon={pokemon} />;
               })}
             </ul>
