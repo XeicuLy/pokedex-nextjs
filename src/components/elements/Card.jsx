@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 export const Card = ({ pokemon }) => {
   return (
-    <ul>
-      <li>
+    <>
+      <li className='overflow-hidden rounded-lg bg-white shadow-md transition duration-300 ease-in-out hover:shadow-lg'>
         <Link href={`/pokemon/${encodeURIComponent(pokemon.id)}`}>
           <Image
             className='mx-auto my-0'
@@ -17,6 +17,6 @@ export const Card = ({ pokemon }) => {
           <h3 className='text-center'>{pokemon.name}</h3>
         </Link>
       </li>
-    </ul>
+    </>
   );
 };

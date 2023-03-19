@@ -25,7 +25,7 @@ const Pokemon = () => {
       <Head>
         <title>{`ポケモン図鑑 - ${pokemonDetailData.name}`}</title>
       </Head>
-      <article>
+      <article className='pt-6'>
         <div className='text-center text-xl'>{`No. ${`${pokemonDetailData.index}`.padStart(
           4,
           '0',
