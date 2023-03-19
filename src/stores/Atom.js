@@ -19,3 +19,8 @@ export const pokemonDataState = atom({
   key: 'pokemonDataState',
   default: [],
 });
+
+export const pokemonDetailDataState = atom({
+  key: 'pokemonDetailDataState',
+  default: [],
+});

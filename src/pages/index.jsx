@@ -7,10 +7,6 @@ import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 const Home = () => {
-  // const [loading, setLoading] = useState(true);
-  // const [nextURL, setNextURL] = useState('');
-  // const [prevURL, setPrevURL] = useState('');
-  // const [pokemonData, setPokemonData] = useState([]);
   const [loading, setLoading] = useRecoilState(loadingState);
   const [nextURL, setNextURL] = useRecoilState(nextURLState);
   const [prevURL, setPrevURL] = useRecoilState(prevURLState);
@@ -66,19 +62,31 @@ const Home = () => {
       <Head>
         <title>ポケモン図鑑</title>
       </Head>
-      <div className='text-center'>
+      <div>
         {loading ? (
-          <h1>ロード中...</h1>
+          <h1 className='text-center'>ロード中...</h1>
         ) : (
           <>
-            <div>
+            <div className='grid grid-cols-4 grid-rows-5 gap-8 '>
               {pokemonData.map((pokemon, i) => {
                 return <Card key={i} pokemon={pokemon} />;
               })}
             </div>
-            <div>
-              <button onClick={handlePrevPage}>Prev</button>
-              <button onClick={handleNextPage}>Next</button>
+            <div className='flex content-center justify-center gap-8 py-6'>
+              <button
+                className='group relative h-12 w-48 overflow-hidden rounded-2xl bg-green-500 text-lg font-bold text-white'
+                onClick={handlePrevPage}
+              >
+                Prev
+                <div className='absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30'></div>
+              </button>
+              <button
+                className='group relative h-12 w-48 overflow-hidden rounded-2xl bg-green-500 text-lg font-bold text-white'
+                onClick={handleNextPage}
+              >
+                Next
+                <div className='absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30'></div>
+              </button>
             </div>
           </>
         )}
